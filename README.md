@@ -1,3 +1,4 @@
+[![go](https://github.com/CreativeUnicorns/dgocacheler/actions/workflows/go.yml/badge.svg)](https://github.com/CreativeUnicorns/dgocacheler/actions/workflows/go.yml)
 # dgocacheler
 
 A concurrency-safe cache for storing Discord messages by channel, suitable for integration with the `discordgo` library.
