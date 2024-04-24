@@ -9,7 +9,7 @@ import (
 
 func AppendChannel2() {
 	// Add some messages to the cache
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 20; i++ {
 		msg := &discordgo.Message{ID: fmt.Sprintf("%d", i), Content: fmt.Sprintf("Ch 2. Message %d", i)}
 		dgocacheler.Cache.AddMessage("channel2", msg)
 	}
