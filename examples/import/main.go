@@ -9,27 +9,47 @@ import (
 )
 
 func main() {
-	// Set the max number of messages the already initialized global cache
-	dgocacheler.Cache.SetMaxMessages(10)
+	// Get the global cache instance
+	globalCache := dgocacheler.GetGlobalCache()
+
+	// Set the max number of messages for the global cache
+	err := globalCache.SetMaxMessages(10)
+	if err != nil {
+		fmt.Printf("Error setting max messages: %v\n", err)
+		return
+	}
 
 	// Add some messages to the cache
 	for i := 0; i < 10; i++ {
 		msg := &discordgo.Message{ID: fmt.Sprintf("%d", i), Content: fmt.Sprintf("Ch 1. Message %d", i)}
-		dgocacheler.Cache.AddMessage("channel1", msg)
+		err := globalCache.AddMessage("channel1", msg)
+		if err != nil {
+			fmt.Printf("Error adding message: %v\n", err)
+		}
 	}
 
 	// Add some messages to the cache for channel 2
 	subpkg.AppendChannel2()
 
 	// Retrieve messages from the cache for channel 1
-	messages, _ := dgocacheler.Cache.GetMessages("channel1")
-	for _, msg := range messages {
-		fmt.Println(msg.Content)
+	messages, err := globalCache.GetMessages("channel1")
+	if err != nil {
+		fmt.Printf("Error getting messages: %v\n", err)
+	} else {
+		fmt.Println("Channel 1 messages:")
+		for _, msg := range messages {
+			fmt.Println(msg.Content)
+		}
 	}
 
 	// Retrieve messages from the cache for channel 2
-	messages, _ = dgocacheler.Cache.GetMessages("channel2")
-	for _, msg := range messages {
-		fmt.Println(msg.Content)
+	messages, err = globalCache.GetMessages("channel2")
+	if err != nil {
+		fmt.Printf("Error getting messages: %v\n", err)
+	} else {
+		fmt.Println("Channel 2 messages:")
+		for _, msg := range messages {
+			fmt.Println(msg.Content)
+		}
 	}
 }
